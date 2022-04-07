@@ -1,0 +1,75 @@
+html {
+    text-align: center;
+    font-family: monospace;
+}
+
+body {
+    background: rgb(9,9,121);
+    background: linear-gradient(180deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+}
+
+
+#calculator {
+    height: 98vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+}
+
+#container {
+    background-color: black;
+    border: 10px solid black;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: minmax(80px, auto) repeat(5, 80px);
+    gap: 2px;
+}
+
+#display {
+    grid-column: 1 / -1;
+    background-color: rgb(196, 196, 196);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 5px;
+    font-size: 18px;
+    margin: 2px;
+}
+
+button {
+    margin: 1px; 
+    border-radius: 5%;
+    border: none;
+    font-size: 24px;
+}
+
+#zero {
+    grid-column: span 2;
+}
+
+#equals {
+    grid-row: span 2;
+}
+
+.operand, .decimal {
+    background-color: grey;
+    color: white;
+}
+
+.operand:hover, .decimal:hover {
+    background-color: rgb(172, 172, 172);
+    color: white;
+}
+
+.operator, #equals, .clear, .sign {
+    background-color: rgb(0, 54, 202);
+    color: white;
+}
+
+.operator:hover, #equals:hover, .clear:hover, .sign:hover {
+    background-color: rgb(0, 140, 255);
+    color: white;
+}
