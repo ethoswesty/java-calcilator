@@ -17,7 +17,7 @@ body {
     align-items: center;
 }
 
-#container {
+.calculator_keys {
     background-color: black;
     border: 10px solid black;
     border-radius: 4px;

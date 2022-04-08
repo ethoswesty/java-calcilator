@@ -11,50 +11,8 @@ function updateDisplay(){
     display.innerHTML = displayValue;
 }
 
-function buttonClick(){
-    for (let i = 0; i < buttons.length; i++){
-        buttons[i].addEventListener('click', function(){
-            if(buttons[i].classList.contains("operand")){
-                inputOperand(buttons[i].value)
-                updateDisplay();
-            } else if (buttons[i].classList.contains("operator")){
-                inputOperator(buttons[i].value)
-                updateDisplay();
-            } else if (buttons[i].classList.contains("equals")){
-                inputEquals();
-                updateDisplay();
-            } else if (buttons[i].classList.contains("decimal")){
-                inputDecimal(displayValue);
-                updateDisplay();
-            } else if (buttons[i].classList.contains("clear")){
-                displayClear();
-                updateDisplay();
-            }
-        })
-    }
-}
-
-buttonClick();
- 
 updateDisplay();
 
-function inputOperand(operand){
-    if(firstOperator === null){
-        if(firstOperator === "0" || displayValue === 0){
-        displayValue = operand;
-    } else if(displayValue === operand){
-        displayValue = operand
-    } else {
-        displayValue += operand;
-    }
-    } else {
-        if(displayValue === firstOperand){
-            displayValue = operand
-        } else {
-            displayValue += operand;
-        }
-    }
-}
 
 function operate(x, y, op){
     if(op === "+"){
