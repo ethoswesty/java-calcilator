@@ -10,6 +10,9 @@ let displayValue = "0";
 function updateDisplay(){
     const display = document.getElementById("display");
     display.innerHTML = displayValue;
+    if(displayValue.length > 9) {
+        display.innerText = displayValue.substring(0, 11);
+    }
 }
 
 updateDisplay();
@@ -27,19 +30,25 @@ buttons.addEventListener('click', (event) => {
     }
 
     if (target.classList.contains('operator')){
-        console.log('operator', target.value);
+        inputOperator(target.value);
+        updateDisplay();
     }
 
     if (target.classList.contains('decimal')){
-        console.log('decimal', target.value);
+        inputDecimal(target.value);
+        updateDisplay();
     }
 
     if (target.classList.contains('clear')){
-        console.log('clear', target.value);
+        displayClear();
+        updateDisplay();
     }
 
-    // inputOperator(target.value);
-    // updateDisplay();
+    if (target.classList.contains('equals')){
+        inputEquals();
+        updateDisplay();
+    }
+
 
 });
 
@@ -61,9 +70,79 @@ function inputOperand(operand){
     }
 }
 
+function inputOperator(operator){
+        if (firstOperator !== null && secondOperator === null){
+            secondOperator = operator;
+            secondOperand = displayValue;
+            result = operate(Number(firstOperand), Number(secondOperand), firstOperator)
+            displayValue = roundNumber(result, 15).toString();
+            firstOperand = displayValue
+            result = null
+        } else if (firstOperator != null && secondOperator != null){
+            secondOperand = displayValue;
+            result = operate(Number(firstOperand), Number(secondOperand), firstOperator)
+            secondOperator = operator
+            displayValue = roundNumber(result, 15).toString();
+            firstOperand = displayValue
+            result = null
+        } else {
+            firstOperator = operator
+            firstOperand = displayValue
+        }
+}
+
+function inputEquals() {
+    if(firstOperator === null){
+        displayValue = displayValue;
+    } else if(secondOperator != null) {
+        secondOperand = displayValue
+        result = operate(Number(firstOperand), Number(secondOperand), secondOperator)
+        if(result === "nice try..."){
+            displayValue = "nice try..."
+        } else {
+            displayValue = roundNumber(result, 15).toString();
+            firstOperand = displayValue
+            secondOperand = null
+            firstOperator = null;
+            secondOperator = null;
+            result = null;
+        }
+    } else {
+        secondOperand = displayValue
+        result = operate(Number(firstOperand), Number(secondOperand), firstOperator)
+        if(result === "nice try..."){
+            displayValue = "nice try..."
+    } else {
+        displayValue = roundNumber(result, 15).toString();
+        firstOperand = displayValue
+        secondOperand = null
+        firstOperator = null;
+        secondOperator = null;
+        result = null;
+        } 
+    }
+}
 
 
+function inputDecimal(point){
+    if(displayValue === firstOperand || displayValue === secondOperand){
+        displayValue = "0"
+        displayValue += point
+    } else if (!displayValue.includes(point)){
+        displayValue += point;
+    }
+}
 
+
+function displayClear(){
+    firstOperand = null;
+    secondOperand = null;
+    firstOperator = null;
+    secondOperator = null;
+    result = null;
+    displayValue = "0";
+    }
+    
 
 function operate(x, y, op){
     if(op === "+"){
@@ -81,11 +160,6 @@ function operate(x, y, op){
     }
 }
 
-function displayClear(){
-firstOperand = null;
-secondOperand = null;
-firstOperator = null;
-secondOperator = null;
-result = null;
-displayValue = "0";
+function roundNumber(num, places){
+    return parseFloat(Math.round(num + 'e' + places) + 'e-' + places);
 }
